@@ -11,3 +11,9 @@ blog_show:
     defaults: { _controller: MyBlogBundle:Default:show }
     requirements:
         id: \d+
+
+blog_delete:
+    path:  /{id}/delete
+    defaults: { _controller: MyBlogBundle:Default:delete }
+    requirements:
+        id: \d+
