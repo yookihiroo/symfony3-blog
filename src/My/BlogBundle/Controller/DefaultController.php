@@ -35,6 +35,9 @@ class DefaultController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($post);
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->set('my_blog', '記事を追加しました');
+
                 return $this->redirect($this->generateUrl('blog_index'));
             }
         }
@@ -61,6 +64,9 @@ class DefaultController extends Controller
         }
         $em->remove($post);
         $em->flush();
+
+        $this->get('session')->getFlashBag()->set('my_blog', '記事を削除しました');
+
         return $this->redirect($this->generateUrl('blog_index'));
     }
 
@@ -88,6 +94,9 @@ class DefaultController extends Controller
                 $post = $form->getData();
                 $post->setUpdatedAt(new \DateTime());
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->set('my_blog', '記事を編集しました');
+
                 return $this->redirect($this->generateUrl('blog_index'));
             }
         }
