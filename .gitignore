@@ -39,3 +39,4 @@
 /var/
 /var/*
 *.log
+.env
