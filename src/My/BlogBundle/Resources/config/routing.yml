@@ -17,3 +17,9 @@ blog_delete:
     defaults: { _controller: MyBlogBundle:Default:delete }
     requirements:
         id: \d+
+
+blog_edit:
+    path:  /{id}/edit
+    defaults: { _controller: MyBlogBundle:Default:edit }
+    requirements:
+        id: \d+
