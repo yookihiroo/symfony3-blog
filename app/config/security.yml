@@ -1,11 +1,18 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb'
+    firewall_name: main
+    user_class: My\BlogBundle\Entity\User
+
 security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+#        in_memory:
+#            memory: ~
+        fos_userbundle:
+            id: fos_user.user_manager
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,7 +21,6 @@ security:
             security: false
 
         main:
-            anonymous: ~
             # activate different ways to authenticate
 
             # http_basic: ~
@@ -22,3 +28,18 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+            logout:       true
+            anonymous:    ~
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
